@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumora - Parfums d'Exception</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap');
+
+/* --- BASE --- */
+body, html {margin:0; padding:0; font-family:'Inter',sans-serif; scroll-behavior:smooth; background:#fffaf5; color:#111;}
+a {text-decoration:none; color:inherit;}
+
+/* --- HEADER --- */
+header {position:sticky; top:0; background:linear-gradient(90deg,#fffaf5 0%,#f3e8e0 100%); padding:15px 0; z-index:1000; box-shadow:0 2px 5px rgba(0,0,0,0.05);}
+header .container {width:90%; margin:0 auto; display:flex; justify-content:space-between; align-items:center;}
+header nav ul {list-style:none; display:flex; gap:20px;}
+header nav ul li a {color:#333; font-weight:500; transition:0.3s;}
+header nav ul li a:hover, header nav ul li a.active {color:#c19f78;}
+.logo {font-family:'Playfair Display', serif; font-size:28px; font-weight:700;}
+
+/* --- HERO --- */
+.hero {position:relative; height:90vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:hidden;}
+.slider {position:absolute; width:100%; height:100%; top:0; left:0;}
+.slide {position:absolute; width:100%; height:100%; opacity:0; transition: opacity 1s ease;}
+.slide.active {opacity:1;}
+.slide img {width:100%; height:100%; object-fit:cover;}
+.hero-content {position:relative; z-index:1; color:#fff; animation:fadeInUp 1.5s ease-out; display:flex; flex-direction:column; align-items:center;}
+.hero-content h2 {font-family:'Playfair Display',serif; font-size:48px; margin-bottom:15px; text-shadow:2px 2px 8px rgba(0,0,0,0.5);}
+.hero-content p {font-size:22px; margin-bottom:20px; text-shadow: 1px 1px 6px rgba(0,0,0,0.5);}
+.btn {padding:12px 30px; background:#c19f78; color:white; border-radius:5px; font-weight:500; transition: all 0.3s; box-shadow:0 0 5px #c19f78;}
+.btn:hover {background:#a37a50; box-shadow:0 0 20px #c19f78; transform: translateY(-3px);}
+
+/* --- CARDS / GALERIE --- */
+.gallery h3 {font-family:'Playfair Display', serif; font-size:32px; margin-bottom:40px; color:#6b4f3c; text-align:center;}
+.carousel-container {position:relative; width:90%; margin:0 auto; overflow:hidden;}
+.carousel {display:flex; transition:transform 0.5s ease; gap:20px;}
+.card {min-width:250px; border-radius:15px; overflow:hidden; position:relative; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;}
+.card img {width:100%; height:220px; object-fit:cover; transition:transform 0.5s ease, filter 0.5s ease;}
+.card-info {position:absolute; bottom:0; width:100%; background:rgba(193,159,120,0.85); color:white; text-align:center; padding:10px 0; transform:translateY(100%); transition:transform 0.3s ease;}
+.card:hover {transform:translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.25);}
+.card:hover img {transform:scale(1.1); filter:brightness(1.3);}
+.card:hover .card-info {transform:translateY(0);}
+.carousel-btn {position:absolute; top:50%; transform:translateY(-50%); background:rgba(193,159,120,0.8); border:none; color:white; padding:10px; cursor:pointer; border-radius:50%; font-size:20px; z-index:10;}
+.carousel-btn:hover {background:#a37a50;}
+.prev {left:10px;}
+.next {right:10px;}
+
+/* --- NOUVEAUTES --- */
+.nouveautes {width:90%; margin:60px auto; text-align:center;}
+.nouveautes h3 {font-family:'Playfair Display', serif; font-size:32px; margin-bottom:30px; color:#6b4f3c;}
+.nouveautes-cards {display:flex; flex-wrap:wrap; justify-content:center; gap:20px;}
+.n-card {width:200px; border-radius:15px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1); transition:0.3s; cursor:pointer;}
+.n-card img {width:100%; height:180px; object-fit:cover; transition:transform 0.5s ease;}
+.n-card:hover img {transform:scale(1.1);}
+.n-card-info {text-align:center; padding:10px; background:#fffaf5;}
+
+/* --- ABOUT --- */
+.about {width:90%; margin:0 auto 60px auto; text-align:center;}
+.about h3 {font-family:'Playfair Display', serif; font-size:32px; margin-bottom:20px; color:#6b4f3c;}
+.about p {font-size:18px; line-height:1.6; color:#7a6656; max-width:800px; margin:0 auto;}
+
+/* --- CONTACT --- */
+.contact {width:90%; margin:0 auto 60px auto; text-align:center;}
+.contact h3 {font-family:'Playfair Display', serif; font-size:32px; margin-bottom:20px; color:#6b4f3c;}
+.contact p {font-size:18px; color:#7a6656;}
+.contact form {display:flex; flex-direction:column; max-width:400px; margin:20px auto;}
+.contact input, .contact textarea {margin-bottom:15px; padding:10px; border:1px solid #ccc; border-radius:5px; font-size:16px;}
+.contact button {padding:12px; background:#c19f78; color:white; border:none; border-radius:5px; font-weight:500; cursor:pointer; transition:0.3s; box-shadow:0 0 5px #c19f78;}
+.contact button:hover {background:#a37a50; box-shadow:0 0 20px #c19f78;}
+
+/* --- FOOTER --- */
+footer {background:#6b4f3c; color:white; text-align:center; padding:20px 0;}
+footer .social a {color:#fff3eb; margin:0 5px; text-decoration:none; transition:0.3s;}
+footer .social a:hover {color:#c19f78; transform:scale(1.2);}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp {0%{opacity:0; transform:translateY(30px);}100%{opacity:1; transform:translateY(0);} }
+.card, .about, .gallery h3, .contact h3, .n-card {opacity:0; transform:translateY(20px); transition:opacity 0.6s ease-out, transform 0.6s ease-out;}
+.card.appear, .about.appear, .gallery h3.appear, .contact h3.appear, .n-card.appear {opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1 class="logo">LR</h1>
+    <nav>
+      <ul>
+        <li><a href="#accueil" class="active">Accueil</a></li>
+        <li><a href="#collections">Collections</a></li>
+        <li><a href="#nouveautes">Nouveautés</a></li>
+        <li><a href="#apropos">À propos</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="accueil" class="hero">
+  <div class="slider">
+    <div class="slide active"><img src="./pexels-dids-parfums-saint-valentin.jpg" alt="Parfum 1"></div>
+    <div class="slide"><img src="./ADOPT_RS_JUIN_316-819x1024.jpg" alt="Parfum 2"></div>
+    <div class="slide"><img src="./meilleurs-parfums-femme-classement-2024.jpg" alt="Parfum 3"></div>
+  </div>
+  <div class="hero-content">
+    <h2 id="hero-text"></h2>
+    <p style="font-size:26px; font-weight:500; color:#fff; text-shadow:2px 2px 8px rgba(0,0,0,0.6); margin-bottom:30px;">L’élégance en un souffle</p>
+    <a href="#collections" class="btn">Découvrir la collection</a>
+  </div>
+</section>
+
+<!-- Galerie -->
+<section id="collections" class="gallery">
+  <h3>Nos Parfums Coup de Coeur</h3>
+  <div class="carousel-container">
+    <button class="carousel-btn prev">&#10094;</button>
+    <div class="carousel">
+      <div class="card"><img src="./parfum_femme_qui_sent_trop_bon_9da365763b.jpg" alt="Parfum Floral"><div class="card-info"><h4>Floral Éclat</h4><p>79€</p></div></div>
+      <div class="card"><img src="./parfum_sexy_426ac1d405.jpg" alt="Parfum Boisé"><div class="card-info"><h4>Boisé Mystique</h4><p>85€</p></div></div>
+      <div class="card"><img src="./LANCOME - LA VIE EST BELLE BLANCHE.jpg" alt="Parfum Fruité"><div class="card-info"><h4>Fruité Doux</h4><p>70€</p></div></div>
+      <div class="card"><img src="./depositphotos_817005356-stock-photo-perfume-bottle-woman-spray-fragrance.jpg" alt="Parfum Épices"><div class="card-info"><h4>Épices Orient</h4><p>90€</p></div></div>
+    </div>
+    <button class="carousel-btn next">&#10095;</button>
+  </div>
+</section>
+
+<!-- Nouveautés -->
+<section id="nouveautes" class="nouveautes">
+  <h3>Nouveautés</h3>
+  <div class="nouveautes-cards">
+    <div class="n-card"><img src="./9829-Lumiere-Elle-French-Avenue.jpg" alt="Parfum nouveau 1"><div class="n-card-info"><h4>Rose Lumière</h4><p>75€</p></div></div>
+    <div class="n-card"><img src="./jasmin.jpg" alt="Parfum nouveau 2"><div class="n-card-info"><h4>Jasmin Étoilé</h4><p>80€</p></div></div>
+    <div class="n-card"><img src="./vanille.jpg" alt="Parfum nouveau 3"><div class="n-card-info"><h4>Vanille Douce</h4><p>65€</p></div></div>
+  </div>
+</section>
+
+<!-- À propos -->
+<section id="apropos" class="about">
+  <h3>À propos de Lumora</h3>
+  <p>Lumora vous propose des parfums d’exception, raffinés et uniques, pour révéler votre élégance et votre personnalité à chaque instant.</p>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="contact">
+  <h3>Contactez-nous</h3>
+  <p>Envoyez-nous un message via ce formulaire :</p>
+  <form action="mailto:tonemail@example.com" method="post" enctype="text/plain">
+    <input type="text" placeholder="Votre nom" name="nom" required>
+    <input type="email" placeholder="Votre email" name="email" required>
+    <textarea placeholder="Votre message" name="message" rows="5" required></textarea>
+    <button type="submit">Envoyer</button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2026 Lumora | by Melissa BESTANI</p>
+  <div class="social"><a href="#">Instagram</a> | <a href="#">Facebook</a></div>
+</footer>
+
+<script>
+// Typewriter
+const heroText = document.getElementById("hero-text");
+const text = "Parfums d'Exception";
+let index = 0;
+function typeWriter() {
+  if(index < text.length){
+    heroText.innerHTML += text.charAt(index);
+    index++;
+    setTimeout(typeWriter, 150);
+  }
+}
+typeWriter();
+
+// Slider automatique
+const slides = document.querySelectorAll('.slide');
+let currentSlide = 0;
+function showSlide(index){
+  slides.forEach((s,i)=> s.classList.toggle('active', i===index));
+}
+function nextSlide(){
+  currentSlide = (currentSlide+1) % slides.length;
+  showSlide(currentSlide);
+}
+setInterval(nextSlide, 3000);
+
+// Fade-in
+const faders = document.querySelectorAll('.card, .about, .gallery h3, .contact h3, .n-card');
+const appearOptions = {threshold:0.1, rootMargin:"0px 0px -50px 0px"};
+const appearOnScroll = new IntersectionObserver(function(entries, observer){
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    entry.target.classList.add('appear');
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+faders.forEach(fader=>appearOnScroll.observe(fader));
+
+// Carousel
+const carousel = document.querySelector('.carousel');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+let scrollAmount = 0;
+const scrollPerClick = 270;
+nextBtn.addEventListener('click', ()=>{
+  if(scrollAmount <= carousel.scrollWidth - carousel.clientWidth - scrollPerClick){
+    scrollAmount += scrollPerClick;
+    carousel.scrollTo({left:scrollAmount, behavior:'smooth'});
+  }
+});
+prevBtn.addEventListener('click', ()=>{
+  if(scrollAmount > 0){
+    scrollAmount -= scrollPerClick;
+    carousel.scrollTo({left:scrollAmount, behavior:'smooth'});
+  }
+});
+</script>
+
+</body>
+</html>
